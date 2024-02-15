@@ -7,10 +7,8 @@ import (
 )
 
 func main() {
-	items := core.NewItems()
-	items.AddItem("Test Item", "This is a test item", "Lorem ipsum dolor sit amet")
-	items.AddItem("Test Item 2", "This is a test item", "Lorem ipsum")
-	items.PrintItems()
+	app := core.NewApp()
+	app.AddItem("title", "desc", "content")
 	// m := tui.NewListPage()
 	// p := tea.NewProgram(m, tea.WithAltScreen())
 
