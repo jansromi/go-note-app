@@ -35,6 +35,10 @@ func (a *App) AddItem(title, desc, content string) {
 	a.items.AddItem(title, desc, content)
 }
 
+func (a *App) DeleteItem(id int) {
+	a.items.DeleteItem(id)
+}
+
 func (a *App) PrintItems() {
 	a.items.PrintItems()
 }

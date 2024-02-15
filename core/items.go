@@ -47,6 +47,18 @@ func (i *Items) AddItem(title, desc, content string) {
 	i.items = append(i.items, NewItem(i.id, title, desc, content))
 }
 
+// Delete an item
+func (i *Items) DeleteItem(id int) {
+	for index, v := range i.items {
+		if v.ID == id {
+			// create two slices, one from the start to the index and one from the index to the end.
+			// then append the two slices together to remove the item at the index
+			i.items = append(i.items[:index], i.items[index+1:]...)
+			break
+		}
+	}
+}
+
 func (i *Items) GetItemsForListView() []*Item {
 	return i.items
 }
