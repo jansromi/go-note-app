@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "title": "Reminder",
+        "desc": "Buy milk and eggs",
+        "content": "Buy milk and eggs from the store."
+    },
+    {
+        "id": 2,
+        "title": "Meeting at 3pm",
+        "desc": "Meeting with the team at 3pm",
+        "content": ""
+    },
+    {
+        "id": 3,
+        "title": "Essay deadline tomorrow",
+        "desc": "return the essay by tomorrow",
+        "content": "return the essay by tomorrow to moodle"
+    }
+]
