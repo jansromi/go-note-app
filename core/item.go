@@ -4,22 +4,24 @@ import "strconv"
 
 // A class for a single item
 type Item struct {
-	id                   int
-	title, desc, content string
+	ID      int    `json:"id"`
+	Title   string `json:"title"`
+	Desc    string `json:"desc"`
+	Content string `json:"content"`
 }
 
-func (i Item) ToJson() map[string]interface{} {
+func (i *Item) ToJson() map[string]interface{} {
 	return map[string]interface{}{
-		"id":      i.id,
-		"title":   i.title,
-		"desc":    i.desc,
-		"content": i.content,
+		"id":      i.ID,
+		"title":   i.Title,
+		"desc":    i.Desc,
+		"content": i.Content,
 	}
 
 }
 
 func (i Item) String() string {
-	return strconv.Itoa(i.id) + " " + i.title
+	return strconv.Itoa(i.ID) + " " + i.Title
 }
 
 func NewItem(id int, title, desc, content string) *Item {
