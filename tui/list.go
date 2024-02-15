@@ -1,6 +1,8 @@
 package tui
 
 import (
+	core "go-note-app/core"
+
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -22,6 +24,8 @@ func (i item) FilterValue() string { return i.title }
 // model for list page
 type model struct {
 	list list.Model
+	// a reference to the core app
+	app core.App
 }
 
 func (m model) Init() tea.Cmd {
@@ -51,37 +55,22 @@ func (m model) View() string {
 }
 
 // just return mock data
-func GetListItems() []list.Item {
-	return []list.Item{
-		item{title: "Raspberry Pi’s", desc: "This is a really long note\nthat spans multiple lines\nand has a lot of text in it\ngoes just on and on and on"},
-		item{title: "Nutella", desc: "It's good on toast"},
-		item{title: "Bitter melon", desc: "It cools you down"},
-		item{title: "Nice socks", desc: "And by that I mean socks without holes"},
-		item{title: "Eight hours of sleep", desc: "I had this once"},
-		item{title: "Cats", desc: "Usually"},
-		item{title: "Plantasia, the album", desc: "My plants love it too"},
-		item{title: "Pour over coffee", desc: "It takes forever to make though"},
-		item{title: "VR", desc: "Virtual reality...what is there to say?"},
-		item{title: "Noguchi Lamps", desc: "Such pleasing organic forms"},
-		item{title: "Linux", desc: "Pretty much the best OS"},
-		item{title: "Business school", desc: "Just kidding"},
-		item{title: "Pottery", desc: "Wet clay is a great feeling"},
-		item{title: "Shampoo", desc: "Nothing like clean hair"},
-		item{title: "Table tennis", desc: "It’s surprisingly exhausting"},
-		item{title: "Milk crates", desc: "Great for packing in your extra stuff"},
-		item{title: "Afternoon tea", desc: "Especially the tea sandwich part"},
-		item{title: "Stickers", desc: "The thicker the vinyl the better"},
-		item{title: "20° Weather", desc: "Celsius, not Fahrenheit"},
-		item{title: "Warm light", desc: "Like around 2700 Kelvin"},
-		item{title: "The vernal equinox", desc: "The autumnal equinox is pretty good too"},
-		item{title: "Gaffer’s tape", desc: "Basically sticky fabric"},
-		item{title: "Terrycloth", desc: "In other words, towel fabric"},
+func GetListItems(noteapp *core.App) []list.Item {
+	allItems := noteapp.GetItemsForListView()
+	var listItems []list.Item
+
+	for _, v := range allItems {
+		listItems = append(listItems, item{title: v.Title, desc: v.Desc})
 	}
+	return listItems
 }
 
 // create a new list page
-func NewListPage() tea.Model {
-	m := model{list: list.New(GetListItems(), list.NewDefaultDelegate(), 0, 0)}
-	m.list.Title = "Title"
+func NewListPage(noteapp *core.App) tea.Model {
+
+	m := model{list: list.New(GetListItems(noteapp), list.NewDefaultDelegate(), 0, 0)}
+	m.list.Title = "Note App"
+	m.app = *noteapp
+
 	return m
 }
