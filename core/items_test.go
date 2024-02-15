@@ -1,6 +1,8 @@
 package core
 
 import (
+	"io/ioutil"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -50,5 +52,48 @@ func TestAddManyItemsAndTestForCorrectId(t *testing.T) {
 
 	if items.items[2].id != 3 {
 		t.Errorf("AddItem() failed, expected id %d, got %d", 3, items.items[2].id)
+	}
+}
+func TestPrintItems(t *testing.T) {
+	items := &Items{
+		items: []*Item{
+			{
+				id:      1,
+				title:   "Test Item 1",
+				desc:    "This is a test item 1",
+				content: "Lorem ipsum dolor sit amet",
+			},
+			{
+				id:      2,
+				title:   "Test Item 2",
+				desc:    "This is a test item 2",
+				content: "Lorem ipsum dolor sit amet",
+			},
+			{
+				id:      3,
+				title:   "Test Item 3",
+				desc:    "This is a test item 3",
+				content: "Lorem ipsum dolor sit amet",
+			},
+		},
+	}
+
+	// Redirect stdout to capture the output
+	old := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+
+	items.PrintItems()
+
+	// Restore stdout
+	w.Close()
+	os.Stdout = old
+
+	out, _ := ioutil.ReadAll(r)
+
+	expectedOutput := "1 Test Item 1\n2 Test Item 2\n3 Test Item 3\n"
+
+	if string(out) != expectedOutput {
+		t.Errorf("PrintItems() failed, expected output:\n%s\ngot:\n%s", expectedOutput, string(out))
 	}
 }
